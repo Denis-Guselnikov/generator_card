@@ -1,0 +1,28 @@
+<!--Модальный компонент для Информации Карт-->
+
+<div class="modal" id="myModal{{ card.id }}" tabindex="-1" aria-labelledby="myModalLabel1" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Владелец карты: {{ card.first_name }} {{ card.last_name }}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true"></span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <ul class="list-unstyled">
+            <li><strong>{{ card.first_name }} {{ card.last_name }}</strong></li>
+            <li>Серия карты: <strong>{{ card.card_series }}</strong></li>
+            <li>Номер карты: <strong>{{ card.number_card }}</strong></li>
+            <li>Сумма: <strong>{{ card.amount }}</strong></li>
+            <li>Дата регистрации: <strong>{{ card.data_created }}</strong></li>
+            <li>Дата окончания: <strong>{{ card.data_end }}</strong></li>
+            <li>Статус: <strong>{{ card.status }}</strong></li>                                                    
+          </ul>
+        </div>
+        <div class="modal-footer">                                                  
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Выйти</button>
+        </div>
+      </div>
+    </div>
+  </div>

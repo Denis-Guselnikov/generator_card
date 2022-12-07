@@ -7,7 +7,7 @@ class DateInput(forms.DateInput):
     input_type = 'date'
 
 
-class CardForm(forms.ModelForm):    
+class CardForm(forms.ModelForm):
 
     class Meta:
         model = Cards
@@ -17,7 +17,7 @@ class CardForm(forms.ModelForm):
             'last_name': 'Фамилия',
             'card_series': 'Серия карты',
             'number_card': 'Номер карты',
-            'amount': 'Сумма',            
+            'amount': 'Сумма',
             'data_end': 'Дата окончания',
             'status': 'Статус карты'
         }
@@ -26,7 +26,7 @@ class CardForm(forms.ModelForm):
             'last_name': forms.TextInput(attrs={'class': 'form-control'}),
             'card_series': forms.NumberInput(attrs={'class': 'form-control'}),
             'number_card': forms.NumberInput(attrs={'class': 'form-control'}),
-            'amount': forms.NumberInput(attrs={'class': 'form-control'}),            
+            'amount': forms.NumberInput(attrs={'class': 'form-control'}),
             'data_end': DateInput(attrs={'class': 'form-control'}),
             'status': forms.Select(attrs={'class': 'form-control'})
         }

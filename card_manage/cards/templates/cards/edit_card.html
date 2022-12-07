@@ -5,7 +5,7 @@
   {% if success %}
     <div class="alert alert-success" role="alert">
       Новая карта обнавлена успешно.
-      <a href="{% url 'index' %}" class="alert-link">Перейти на главную страницу.</a>
+      <a href="{% url 'cards:index' %}" class="alert-link">Перейти на главную страницу.</a>
     </div>
   {% else %}
     <div class="row justify-content-center">
@@ -19,7 +19,7 @@
               {% csrf_token %}
               {{ form.as_p }}
               <button type="submit" class="btn btn-primary">Редактировать</button>
-              <a href="{% url 'index' %}" class="btn btn-secondary">Отменить</a>
+              <a href="{% url 'cards:index' %}" class="btn btn-secondary">Отменить</a>
             </form>
           </div>
         </div>
