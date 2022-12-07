@@ -1,4 +1,7 @@
-from django.http import HttpResponseRedirect
+import json
+
+from django.core.paginator import Paginator
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
 
@@ -6,17 +9,42 @@ from .forms import CardForm
 from .models import Cards
 
 
+def search_card(request):
+    """Поисковик на главной странице"""
+    if request.method == 'POST':
+        search_str = json.loads(request.body).get('searchText')
+
+        cards = Cards.objects.filter(
+            first_name__icontains=search_str) | Cards.objects.filter(
+            last_name__icontains=search_str) | Cards.objects.filter(
+            card_series__istartswith=search_str) | Cards.objects.filter(
+            number_card__istartswith=search_str) | Cards.objects.filter(
+            amount__istartswith=search_str) | Cards.objects.filter(
+            data_created__istartswith=search_str) | Cards.objects.filter(
+            data_end__istartswith=search_str) | Cards.objects.filter(
+            status__icontains=search_str)
+
+        data = cards.values()
+        return JsonResponse(list(data), safe=False)
+
+
 def index(request):
+    """Главная страница"""
     cards = Cards.objects.all()
-    context = {'cards': cards}
+    paginator = Paginator(cards, 5)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    context = {'cards': cards, 'page_obj': page_obj}
     return render(request, 'cards/index.html', context)
 
 
 def view_info(request, id):
+    """Информация об объекте"""
     return HttpResponseRedirect(reverse('cards:index'))
 
 
 def edit_card(request, id):
+    """Редактирование объекта"""
     if request.method == 'POST':
         card = Cards.objects.get(pk=id)
         form = CardForm(request.POST, instance=card)
@@ -33,6 +61,7 @@ def edit_card(request, id):
 
 
 def delete_card(request, id):
+    """Удаление объекта"""
     if request.method == 'POST':
         card = Cards.objects.get(pk=id)
         card.delete()
@@ -40,6 +69,7 @@ def delete_card(request, id):
 
 
 def add_card(request):
+    """Добавление нового объекта"""
     if request.method == 'POST':
         form = CardForm(request.POST)
         if form.is_valid():
